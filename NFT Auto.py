@@ -6,24 +6,24 @@ https://github.com/needleworm
 """
 
 import sys
-from PyQt5 import QtGui
-from PyQt5 import QtWidgets as Q
-from PyQt5 import QtCore as QT
+from PyQt6 import QtGui
+from PyQt6 import QtWidgets as Q
+from PyQt6 import QtCore as QT
 import time
-from PIL import Image
+from PIL import Image, ImageQt
 import numpy as np
-import qimage2ndarray as Q2A
 from ui import Ui_MainWindow
 import os
+import platform
 
 ui_class = Ui_MainWindow
 
 
 def resize_to_qpixmap(img, xdim, ydim):
-    canvas = np.asarray(img.convert("RGB").resize((xdim, ydim)))
-    qimage_var = Q2A.array2qimage(canvas)
-    qpixmap_var = QtGui.QPixmap.fromImage(qimage_var)
-    return qpixmap_var
+    img = img.convert("RGB").resize((xdim, ydim))
+    qim = ImageQt.ImageQt(img)
+    qm = QtGui.QPixmap.fromImage(qim)
+    return qm
 
 
 def draw_from_layers(layer_list):
@@ -55,10 +55,17 @@ class PixelRandomizer(QT.QThread):
         a, b, c, _, e = time.ctime().split(" ")
         self.out_dir = '[Color Shuffle]' + " ".join([e, b, c, a])
 
-    def run_process(self, image_file, sensitivity, xdim, ydim):
+    def run_process(self, image_file, sensitivity, xdim, ydim, isMac):
         self.progress_out.emit(0)
-        if self.out_dir not in os.listdir():
-            os.mkdir(self.out_dir)
+        if not isMac:
+            if self.out_dir not in os.listdir():
+                os.mkdir(self.out_dir)
+        else:
+            if self.out_dir not in os.listdir("../../.."):
+                self.out_dir = "../../../" + self.out_dir    
+                os.mkdir(self.out_dir)
+            else:
+                self.out_dir = "../../../" + self.out_dir
 
         origin_filename = image_file.split("/")[-1].split(".")[0].strip()
         i_file = Image.open(image_file)
@@ -142,10 +149,17 @@ class LayerAugmentation(QT.QThread):
         a, b, c, _, e = time.ctime().split(" ")
         self.out_dir = '[Layer Augment]' + " ".join([e, b, c, a])
 
-    def run_process(self, layers, xdim, ydim):
+    def run_process(self, layers, xdim, ydim, isMac):
         self.progress_out.emit(0)
-        if self.out_dir not in os.listdir():
-            os.mkdir(self.out_dir)
+        if not isMac:
+            if self.out_dir not in os.listdir():
+                os.mkdir(self.out_dir)
+        else:
+            if self.out_dir not in os.listdir("../../.."):
+                self.out_dir = "../../../" + self.out_dir    
+                os.mkdir(self.out_dir)
+            else:
+                self.out_dir = "../../../" + self.out_dir
 
         files = []
         for el in layers:
@@ -267,6 +281,9 @@ class WindowClass(Q.QMainWindow, ui_class):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.isMac = False
+        if platform.system() == "Darwin":
+            self.isMac = True
 
         """
         # tab 1 컴포넌트들
@@ -347,7 +364,8 @@ class WindowClass(Q.QMainWindow, ui_class):
         self.worker_3.progress_out.connect(self.progressBar_2.setValue)
         self.doing_job_2 = not self.worker_3.run_process(layers,
                                                          self.screen_width_2,
-                                                         self.screen_height_2)
+                                                         self.screen_height_2,
+                                                         self.isMac)
         if self.doing_job_2:
             self.startButton_2.setText("Processing..")
         else:
@@ -370,7 +388,8 @@ class WindowClass(Q.QMainWindow, ui_class):
         self.doing_job_1 = not self.worker_1.run_process(self.imageFile,
                                                          float(self.slider.value()),
                                                          self.screen_width_1,
-                                                         self.screen_height_1)
+                                                         self.screen_height_1,
+                                                         self.isMac)
         if self.doing_job_1:
             self.startButton_1.setText("Processing..")
         else:
@@ -484,5 +503,5 @@ if __name__ == "__main__":
     app = Q.QApplication(sys.argv)
     myWindow = WindowClass()
     myWindow.show()
-    app.exec_()
-    sys.exit(app.exec_)
+    app.exec()
+    sys.exit(app.exec)

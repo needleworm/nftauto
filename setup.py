@@ -11,18 +11,17 @@ APP = ['NFT Auto.py']
 DATA_FILES = []
 OPTIONS = {
     "includes": [
-        "PyQt5.QtGUi",
-        "PyQt5.QtWidgets",
-        "PyQt5.QtCore",
-        "base64",
-        "hashlib",
-        "hmac",
-        "json",
-        "time",
+        "PyQt6.QtGUi",
+        "PyQt6.QtWidgets",
+        "PyQt6.QtCore",
         "PIL.Image",
-        "numpy",
-        "qimage2ndarray",
-        "./resource_rc.py", "./ui.py"
+        "PIL.ImageQt",
+        "numpy"
+        "sys",
+        "os",
+        "time",
+        "./resource_rc.py", 
+        "./ui.py"
     ],
     "iconfile": "./resources/icon.png",
     "resources": "./resources",
