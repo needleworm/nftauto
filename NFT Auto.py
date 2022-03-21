@@ -284,6 +284,10 @@ class WindowClass(Q.QMainWindow, ui_class):
         self.isMac = False
         if platform.system() == "Darwin":
             self.isMac = True
+        
+        self.basedir = "./"
+        if self.isMac:
+            self.basedir = "../../../"
 
         """
         # tab 1 컴포넌트들
@@ -399,7 +403,7 @@ class WindowClass(Q.QMainWindow, ui_class):
     def get_image_file_1(self):
         getFile = Q.QFileDialog.getOpenFileName(self,
                                                 "Select Source Image",
-                                                "./",
+                                                self.basedir,
                                                 filter="Images (*.png *.jpg *.jpeg)")
         self.imageFile = getFile[0]
         self.progressBar_1.setValue(0)
@@ -411,7 +415,8 @@ class WindowClass(Q.QMainWindow, ui_class):
     def get_layer_directory_1(self):
         getDir = Q.QFileDialog.getExistingDirectory(self,
                                                     "Select Directory for Layer 1",
-                                                    "./", )
+                                                    self.basedir, 
+                                                    )
         self.layer_dirs[0] = getDir
         self.layer_1.setText(getDir)
         self.progressBar_2.setValue(0)
@@ -420,7 +425,8 @@ class WindowClass(Q.QMainWindow, ui_class):
     def get_layer_directory_2(self):
         getDir = Q.QFileDialog.getExistingDirectory(self,
                                                     "Select Directory for Layer 2",
-                                                    "./")
+                                                    self.basedir
+                                                    )
         self.layer_dirs[1] = getDir
         self.layer_2.setText(getDir)
         self.progressBar_2.setValue(0)
@@ -429,7 +435,8 @@ class WindowClass(Q.QMainWindow, ui_class):
     def get_layer_directory_3(self):
         getDir = Q.QFileDialog.getExistingDirectory(self,
                                                     "Select Directory for Layer 3",
-                                                    "./")
+                                                    self.basedir
+                                                    )
         self.layer_dirs[2] = getDir
         self.layer_3.setText(getDir)
         self.progressBar_2.setValue(0)
@@ -438,7 +445,8 @@ class WindowClass(Q.QMainWindow, ui_class):
     def get_layer_directory_4(self):
         getDir = Q.QFileDialog.getExistingDirectory(self,
                                                     "Select Directory for Layer 4",
-                                                    "./")
+                                                    self.basedir
+                                                    )
         self.layer_dirs[3] = getDir
         self.layer_4.setText(getDir)
         self.progressBar_2.setValue(0)
@@ -447,7 +455,8 @@ class WindowClass(Q.QMainWindow, ui_class):
     def get_layer_directory_5(self):
         getDir = Q.QFileDialog.getExistingDirectory(self,
                                                     "Select Directory for Layer 5",
-                                                    "./")
+                                                    self.basedir
+                                                    )
         self.layer_dirs[4] = getDir
         self.layer_5.setText(getDir)
         self.progressBar_2.setValue(0)
@@ -456,7 +465,8 @@ class WindowClass(Q.QMainWindow, ui_class):
     def get_layer_directory_6(self):
         getDir = Q.QFileDialog.getExistingDirectory(self,
                                                     "Select Directory for Layer 6",
-                                                    "./")
+                                                    self.basedir
+                                                    )
         self.layer_dirs[5] = getDir
         self.layer_6.setText(getDir)
         self.progressBar_2.setValue(0)
@@ -465,7 +475,8 @@ class WindowClass(Q.QMainWindow, ui_class):
     def get_layer_directory_7(self):
         getDir = Q.QFileDialog.getExistingDirectory(self,
                                                     "Select Directory for Layer 7",
-                                                    "./")
+                                                    self.basedir
+                                                    )
         self.layer_dirs[6] = getDir
         self.layer_7.setText(getDir)
         self.progressBar_2.setValue(0)
@@ -474,7 +485,8 @@ class WindowClass(Q.QMainWindow, ui_class):
     def get_layer_directory_8(self):
         getDir = Q.QFileDialog.getExistingDirectory(self,
                                                     "Select Directory for Layer 8",
-                                                    "./")
+                                                    self.basedir
+                                                    )
         self.layer_dirs[7] = getDir
         self.layer_8.setText(getDir)
         self.progressBar_2.setValue(0)
@@ -483,7 +495,8 @@ class WindowClass(Q.QMainWindow, ui_class):
     def get_layer_directory_9(self):
         getDir = Q.QFileDialog.getExistingDirectory(self,
                                                     "Select Directory for Layer 9",
-                                                    "./")
+                                                    self.basedir
+                                                    )
         self.layer_dirs[8] = getDir
         self.layer_9.setText(getDir)
         self.progressBar_2.setValue(0)
@@ -492,7 +505,8 @@ class WindowClass(Q.QMainWindow, ui_class):
     def get_layer_directory_10(self):
         getDir = Q.QFileDialog.getExistingDirectory(self,
                                                     "Select Directory for Layer 10",
-                                                    "./")
+                                                    self.basedir
+                                                    )
         self.layer_dirs[9] = getDir
         self.layer_10.setText(getDir)
         self.progressBar_2.setValue(0)
