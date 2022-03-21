@@ -282,7 +282,7 @@ class WindowClass(Q.QMainWindow, ui_class):
         super().__init__()
         self.setupUi(self)
         self.isMac = False
-        if platform.system() == "Darwin":
+        if platform.system() == "Darwin" and ".app" in os.getcwd():
             self.isMac = True
         
         self.basedir = "./"
