@@ -52,8 +52,9 @@ class PixelRandomizer(QT.QThread):
     def __init__(self):
         super().__init__()
         self.scene = Q.QGraphicsScene()
-        a, b, c, _, e = time.ctime().split(" ")
-        self.out_dir = '[Color Shuffle]' + " ".join([e, b, c, a])
+        tm = time.localtime(time.time())
+        string = time.strftime('%Y-%m-%d %I:%M:%S %p', tm)
+        self.out_dir = '[Color Shuffle]' + string
 
     def run_process(self, image_file, sensitivity, xdim, ydim, isMac):
         self.progress_out.emit(0)
@@ -146,8 +147,9 @@ class LayerAugmentation(QT.QThread):
     def __init__(self):
         super().__init__()
         self.scene = Q.QGraphicsScene()
-        a, b, c, _, e = time.ctime().split(" ")
-        self.out_dir = '[Layer Augment]' + " ".join([e, b, c, a])
+        tm = time.localtime(time.time())
+        string = time.strftime('%Y-%m-%d %I:%M:%S %p', tm)
+        self.out_dir = '[Layer Augment]' + string
 
     def run_process(self, layers, xdim, ydim, isMac):
         self.progress_out.emit(0)
